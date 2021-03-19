@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+    <h2>History</h2>
+    <table class="table">
+        <thead>
+            <th scope="col">Symbol</th>
+            <th scope="col">Price</th>
+            <th scope="col">Transaction</th>
+            <th scope="col">Time</th>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row.stock }}</td>
+                <td>{{ row.price | usd }}</td>
+                <td>
+                    {% if row.transaction_type == 0 %}
+                    {% block buy %}
+                    Buy
+                    {% endblock buy %}
+                    {% else %}
+                    {% block content %}
+                    Sell
+                    {% endblock content %}
+                    {% endif %}
+                </td>
+                <td>{{ row.transaction_time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
